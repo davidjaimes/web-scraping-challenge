@@ -49,6 +49,8 @@ def scrape():
         url = 'https://space-facts.com/mars/'
         browser.visit(url)
         df = pd.read_html(browser.html)
+        df[0].columns = ['Description', 'Value']
+        df[0].set_index('Description', inplace=True)
         html_table = df[0].to_html()
 
         # Create Complete Dictionary
