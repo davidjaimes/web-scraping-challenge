@@ -16,6 +16,7 @@ def scrape():
         # and parse html with Beautiful Soup.
         url = 'https://mars.nasa.gov/news/'
         browser.visit(url)
+        browser.is_element_present_by_css('.article_teaser_body', wait_time=1)
         soup = BeautifulSoup(browser.html, 'html.parser')
 
         # Scrape and collect the latest news title and paragraph text.

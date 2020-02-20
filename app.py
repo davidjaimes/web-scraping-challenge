@@ -28,10 +28,10 @@ def scrape():
     mars_data = scrape_mars.scrape()
 
     # Update the Mongo database using update and upsert=True
-    mongo.db.collection.update_many(mars_data, {'$set': mars_data}, upsert=True)
+    mongo.db.collection.update_many({}, {'$set': mars_data}, upsert=True)
 
     # Redirect back to home page
-    return redirect("/", code=302)
+    return redirect("/")
 
 
 if __name__ == "__main__":
