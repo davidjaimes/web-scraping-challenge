@@ -50,5 +50,26 @@
       </div>
     </div>
 
+    <!-- Card for Plots -->
+    <div class="container text-center">
+      <h1 class="display-4">Comparisons</h1>
+      <p>Click any plot to get an in-depth analysis.</p>
+      <div class="row">
+
+        <!-- Visualization Number N-->
+        {% for item in mars_data.hemisphere_image_urls %}
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <h3 class="card-header">{{item.title}}</h3>
+            <a href="{{item.image_url}}">
+              <img style="height: 100%; width: 100%; display: block;" src="{{item.image_url}}" alt="{{item.title}}">
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+
   </body>
 </html>

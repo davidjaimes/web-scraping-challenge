@@ -53,13 +53,36 @@ def scrape():
         df[0].set_index('Description', inplace=True)
         html_table = df[0].to_html()
 
+        # Visit the Mars Hemispheres website with chrome driver
+        # and parse html with Beautiful Soup.
+        url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+        browser.visit(url)
+        soup = BeautifulSoup(browser.html, 'html.parser')
+
+        # Scrape and collect high resolution images for each
+        # of Mars' hemispheres.
+        base_url = 'https://astrogeology.usgs.gov'
+        hemisphere_image_urls = []
+        for item in soup.find_all('div', class_='item'):
+            title = item.h3.text
+            image_url = item.find('a', class_='itemLink product-item')['href']
+
+            # Visit individual hemisphere website to scrape and collect full size image.
+            browser.visit(base_url + image_url)
+            soup = BeautifulSoup(browser.html, 'html.parser')
+            image_url = soup.find('img', class_='wide-image')['src']
+
+            # Append dictionary to list
+            hemisphere_image_urls.append({'title': title, 'image_url': base_url + image_url})
+
         # Create Complete Dictionary
         mars_data = {
             'news_title': news_title,
             'news_p': news_p,
             'featured_image_url': featured_image_url,
             'mars_weather': mars_weather,
-            'html_table': html_table
+            'html_table': html_table,
+            'hemisphere_image_urls': hemisphere_image_urls
         }
 
         return mars_data
